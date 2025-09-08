@@ -1,0 +1,672 @@
+CREATE TABLE grades (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    grade_name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE subjects (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    subject_name VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE grade_subject (
+    grade_id INT,
+    subject_id INT,
+    PRIMARY KEY (grade_id, subject_id),
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE,
+    FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE
+);
+
+CREATE TABLE timetables (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    grade_id INT NOT NULL,
+    day ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday') NOT NULL,
+    period INT NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE,
+);
+
+
+
+
+<!--Teacher-->
+
+CREATE TABLE user (
+    username VARCHAR(50) PRIMARY KEY,
+    role ENUM('Teacher', 'NoClass_Teacher', 'Staff') NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    active TINYINT(1) DEFAULT 1
+);
+
+
+
+CREATE TABLE teacher (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    full_name VARCHAR(255) NOT NULL,
+    gender ENUM('Male', 'Female') NOT NULL,
+    date_of_birth DATE NOT NULL,
+    postal_address TEXT NOT NULL,
+    ethnicity VARCHAR(255),
+    nic_number VARCHAR(50) NOT NULL UNIQUE,
+    marital_status ENUM('Single', 'Married') NOT NULL,
+    whatsapp_number VARCHAR(15),
+    residence_number VARCHAR(15),
+    first_language VARCHAR(50),
+    profile_image VARCHAR(255),
+    subject_id INT,
+    grade_id INT,
+    teaching_classes JSON
+    rank VARCHAR(255) DEFAULT NULL;
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE,
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE,
+    FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE
+    rank VARCHAR(255) DEFAULT NULL;
+);
+
+CREATE TABLE ol_result_teacher (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    subject_name VARCHAR(100),
+    result ENUM('A', 'B', 'C', 'S', 'W') NOT NULL,
+    index_number VARCHAR(50) NOT NULL,
+    year INT NOT NULL
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE
+);
+
+CREATE TABLE al_result_teacher (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    subject_name VARCHAR(100),
+    result ENUM('A', 'B', 'C', 'S', 'W') NOT NULL,
+    index_number VARCHAR(50) NOT NULL,
+    year INT NOT NULL
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE
+);
+
+CREATE TABLE previous_info (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50), 
+    previous_role VARCHAR(255),
+    previous_company VARCHAR(255),
+    years_experience INT,
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE  
+);
+
+
+CREATE TABLE educational_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),  
+    other_educational_qualification TEXT,
+    professional_qualification TEXT,
+    extra_curricular_activities TEXT,
+    work_experience TEXT,
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE
+);
+
+
+<!--No Class Teacher-->
+
+CREATE TABLE user (
+    username VARCHAR(50) PRIMARY KEY,
+    role ENUM('Teacher', 'NoClass_Teacher', 'Staff') NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    active TINYINT(1) DEFAULT 1
+);
+
+CREATE TABLE noclass_teacher (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    full_name VARCHAR(255) NOT NULL,
+    gender ENUM('Male', 'Female') NOT NULL,
+    date_of_birth DATE NOT NULL,
+    postal_address TEXT NOT NULL,
+    ethnicity VARCHAR(255),
+    nic_number VARCHAR(50) NOT NULL UNIQUE,
+    marital_status ENUM('Single', 'Married') NOT NULL,
+    whatsapp_number VARCHAR(15),
+    residence_number VARCHAR(15),
+    first_language VARCHAR(50),
+    profile_image VARCHAR(255),
+    subject_id INT,
+    teaching_classes JSON;
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE,
+    FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE
+);
+
+CREATE TABLE ol_result_teacher (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    subject_name VARCHAR(100),
+    result ENUM('A', 'B', 'C', 'S', 'W') NOT NULL,
+    index_number VARCHAR(50) NOT NULL,
+    year INT NOT NULL
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE
+);
+
+CREATE TABLE al_result_teacher (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    subject_name VARCHAR(100),
+    result ENUM('A', 'B', 'C', 'S', 'W') NOT NULL,
+    index_number VARCHAR(50) NOT NULL,
+    year INT NOT NULL
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE
+);
+
+CREATE TABLE previous_info (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50), 
+    previous_role VARCHAR(255),
+    previous_company VARCHAR(255),
+    years_experience INT,
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE  
+);
+
+
+
+CREATE TABLE educational_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),  
+    other_educational_qualification TEXT,
+    professional_qualification TEXT,
+    extra_curricular_activities TEXT,
+    work_experience TEXT,
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE
+);
+
+<!--Staff-->
+
+CREATE TABLE user (
+    username VARCHAR(50) PRIMARY KEY,
+    role ENUM('Teacher', 'NoClass_Teacher', 'Staff') NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    active TINYINT(1) DEFAULT 1
+);
+
+CREATE TABLE staff (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    full_name VARCHAR(255) NOT NULL,
+    gender ENUM('Male', 'Female') NOT NULL,
+    date_of_birth DATE NOT NULL,
+    postal_address TEXT NOT NULL,
+    ethnicity VARCHAR(255),
+    nic_number VARCHAR(50) NOT NULL UNIQUE,
+    marital_status ENUM('Single', 'Married') NOT NULL,
+    whatsapp_number VARCHAR(15),
+    residence_number VARCHAR(15),
+    first_language VARCHAR(50),
+    profile_image VARCHAR(255),
+    position VARCHAR(255),
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE,
+
+);
+
+CREATE TABLE ol_result_staff (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    subject_name VARCHAR(100),
+    result ENUM('A', 'B', 'C', 'S', 'W') NOT NULL,
+    index_number VARCHAR(50) NOT NULL,
+    year INT NOT NULL,
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE
+);
+
+CREATE TABLE al_result_staff (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    subject_name VARCHAR(100),
+    result ENUM('A', 'B', 'C', 'S', 'W') NOT NULL,
+    index_number VARCHAR(50) NOT NULL,
+    year INT NOT NULL,
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE
+);
+
+CREATE TABLE educational_details (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),  
+    other_educational_qualification TEXT,
+    professional_qualification TEXT,
+    extra_curricular_activities TEXT,
+    work_experience TEXT,
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE
+);
+
+CREATE TABLE previous_info (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50), 
+    previous_role VARCHAR(255),
+    previous_company VARCHAR(255),
+    years_experience INT,
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE  
+);
+
+
+<!--Student-->
+
+CREATE TABLE Student_Admissions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_name VARCHAR(255) NOT NULL,
+    student_address TEXT NOT NULL,
+    student_dob DATE NOT NULL,
+    student_gender ENUM('Male', 'Female', 'Other') NOT NULL,
+    student_nationality VARCHAR(100) NOT NULL,
+    student_religion VARCHAR(100) NOT NULL,
+    student_mother_tongue VARCHAR(100) NOT NULL,
+    student_image VARCHAR(255),
+    student_phone VARCHAR(20) ,
+    assigning_grade VARCHAR(50) NOT NULL,
+    school_attended VARCHAR(255),
+    school_address TEXT,
+    school_medium VARCHAR(100),
+    second_language VARCHAR(100),
+    grade_passed VARCHAR(50),
+    last_attended DATE,
+    duration_of_stay VARCHAR(50),
+    reason_for_leaving TEXT,
+    special_attention TEXT,
+    father_name VARCHAR(255),
+    father_id VARCHAR(100),
+    father_dob DATE,
+    father_occupation VARCHAR(255),
+    father_school VARCHAR(255),
+    father_education VARCHAR(255),
+    father_mobile VARCHAR(20),
+    father_residence TEXT,
+    father_email VARCHAR(255),
+    mother_name VARCHAR(255),
+    mother_id VARCHAR(100),
+    mother_dob DATE,
+    mother_occupation VARCHAR(255),
+    mother_school VARCHAR(255),
+    mother_education VARCHAR(255),
+    mother_mobile VARCHAR(20),
+    mother_residence TEXT,
+    mother_email VARCHAR(255),
+    guardian_name VARCHAR(255),
+    guardian_id VARCHAR(100),
+    guardian_dob DATE,
+    guardian_occupation VARCHAR(255),
+    guardian_school VARCHAR(255),
+    guardian_education VARCHAR(255),
+    guardian_mobile VARCHAR(20),
+    guardian_residence TEXT,
+    guardian_email VARCHAR(255),
+    guardian_relationship VARCHAR(100),
+    guardian_reason TEXT,
+    siblings TEXT,
+    parents_together ENUM('Yes', 'No') NOT NULL,
+    parents_reason TEXT,
+    remarks TEXT,
+    emergency_name VARCHAR(255) NOT NULL,
+    emergency_relationship VARCHAR(100) NOT NULL,
+    emergency_mobile VARCHAR(20) NOT NULL,
+    emergency_residence TEXT,
+    emergency_office TEXT,
+    emergency_fax VARCHAR(20),
+    signature_image BLOB
+);
+
+CREATE TABLE Students (
+    id INT PRIMARY KEY,  
+    name VARCHAR(100) NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    grade_id INT,  -- Foreign key for the student's grade,
+    active TINYINT(1) DEFAULT 1
+    FOREIGN KEY (id) REFERENCES Student_Admissions(id) ON DELETE CASCADE,  
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE
+);
+
+CREATE TABLE student_block_reasons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT,
+    block_reason TEXT,
+    FOREIGN KEY (student_id) REFERENCES Students(id)
+);
+
+
+CREATE TABLE siblings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_admission_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    gender VARCHAR(50),
+    dob DATE,
+    school VARCHAR(255),
+    grade VARCHAR(50),
+    FOREIGN KEY (student_admission_id) REFERENCES Student_Admissions(id) ON DELETE CASCADE
+);
+
+CREATE TABLE attendance (
+    id INT AUTO_INCREMENT PRIMARY KEY,             
+    student_id INT NOT NULL,                       
+    teacher_user_id VARCHAR(50) NOT NULL,          
+    attendance_date DATE NOT NULL,                 
+    status ENUM('Present', 'Absent', 'Late') NOT NULL, 
+    FOREIGN KEY (student_id) REFERENCES Students(id) ON DELETE CASCADE,  
+    FOREIGN KEY (teacher_user_id) REFERENCES teacher(username) ON DELETE CASCADE,  
+    UNIQUE(student_id, attendance_date)       
+);
+
+CREATE TABLE assignments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    end_date DATE NOT NULL,
+    username VARCHAR(50) NOT NULL,  
+    class_id INT NOT NULL,
+    FOREIGN KEY (username) REFERENCES user(username) ON DELETE CASCADE,  
+    FOREIGN KEY (class_id) REFERENCES grades(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE messages (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    sender_username VARCHAR(50) NOT NULL,
+    receiver_username VARCHAR(50), -- NULL for broadcast messages
+    content TEXT NOT NULL,
+    attachment_path VARCHAR(255), -- Optional file attachment path
+    is_broadcast TINYINT(1) DEFAULT 0, -- 1 for broadcast, 0 for individual
+    target_group ENUM('Students', 'Teachers', 'NoClass_Teachers', 'Staff') NULL, -- Used for broadcast
+    grade_id INT NULL, -- Used when targeting specific grades
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_read TINYINT(1) DEFAULT 0,
+    user_sender VARCHAR(50)
+    FOREIGN KEY (sender_username) REFERENCES admin(username) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_username) REFERENCES user(username) ON DELETE CASCADE,
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE,
+    ADD CONSTRAINT fk_user_sender FOREIGN KEY (user_sender) REFERENCES user(username) ON DELETE CASCADE
+);
+
+
+CREATE TABLE user_messages (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    sender_username VARCHAR(50) NOT NULL,
+    receiver_username VARCHAR(50), -- NULL for broadcast
+    content TEXT NOT NULL,
+    attachment_path VARCHAR(255), -- Optional file attachment path
+    target_role ENUM('Teacher', 'NoClass_Teacher', 'Staff') NULL, -- Used for role-based broadcast
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_read TINYINT(1) DEFAULT 0,
+    FOREIGN KEY (sender_username) REFERENCES user(username) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_username) REFERENCES admin(username) ON DELETE CASCADE
+);
+
+
+CREATE TABLE student_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,  
+    sender_username VARCHAR(50) NOT NULL,  -- References the student's username
+    receiver_username VARCHAR(50),        -- References admin username
+    content TEXT NOT NULL,                -- Message content
+    attachment_path VARCHAR(255),         -- Optional file attachment
+    grade_id INT,                         -- References the student's grade
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_read TINYINT(1) DEFAULT 0,         -- Whether the message has been read
+    FOREIGN KEY (sender_username) REFERENCES Students(username) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_username) REFERENCES admin(username) ON DELETE CASCADE,
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE
+);
+
+CREATE TABLE student_send_messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_username VARCHAR(255) NOT NULL,
+    receiver_username VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    attachment_path VARCHAR(255),
+    is_broadcast TINYINT(1) DEFAULT 0,  -- 0 = individual, 1 = broadcast
+    grade_id INT,  -- To track which grade the message is for (if applicable)
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (receiver_username) REFERENCES students(username) ON DELETE CASCADE
+);
+
+
+CREATE TABLE chapters (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    chapter_name VARCHAR(255) NOT NULL,
+    periods_allocated INT NOT NULL,
+    term VARCHAR(50) NOT NULL,
+    subject_id INT NOT NULL,
+    grade_id INT NOT NULL,
+    completion_status BOOLEAN DEFAULT FALSE,  -- Marks if the chapter is completed
+    finished_on_time BOOLEAN DEFAULT NULL,  -- NULL means not set, TRUE for on time, FALSE for late
+    extra_periods INT DEFAULT 0,            -- Number of extra periods used if not finished on time
+    reason TEXT,                            -- Reason for delay if not finished on time
+    FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE,
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE
+);
+
+CREATE TABLE exams (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    term INT NOT NULL,
+    grade_id INT NOT NULL,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    publish_date DATE NOT NULL,
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE
+);
+
+CREATE TABLE exam_subjects (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    exam_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    exam_date DATE NOT NULL,
+    exam_time TIME NOT NULL,
+    FOREIGN KEY (exam_id) REFERENCES exams(id) ON DELETE CASCADE,
+    FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE
+);
+
+-- Updated student_marks table
+CREATE TABLE student_marks (
+    exam_id INT NOT NULL,
+    student_username VARCHAR(50) NOT NULL,
+    subject_id INT NOT NULL,
+    marks DECIMAL(5, 2) NOT NULL,
+    PRIMARY KEY (exam_id, student_username, subject_id),
+    FOREIGN KEY (exam_id) REFERENCES exams(id) ON DELETE CASCADE,
+    FOREIGN KEY (student_username) REFERENCES students(username) ON DELETE CASCADE,
+    FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE
+);
+
+CREATE TABLE ranks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    grade_id INT NOT NULL,
+    exam_id INT NOT NULL,
+    term VARCHAR(50) NOT NULL,
+    rank INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (username) REFERENCES students(username) ON DELETE CASCADE,
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE,
+    FOREIGN KEY (exam_id) REFERENCES exams(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE tests (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    type ENUM('Monthly', 'Unit Test') NOT NULL,
+    grade_id INT NOT NULL,
+    subject_id INT NOT NULL,
+    teacher_username VARCHAR(50) DEFAULT NULL,
+    noclass_teacher_username VARCHAR(50) DEFAULT NULL,
+    staff_username VARCHAR(50) DEFAULT NULL,
+    test_date DATE NOT NULL,
+    publish_date DATE NOT NULL,
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE,
+    FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE,
+    FOREIGN KEY (teacher_username) REFERENCES teacher(username) ON DELETE CASCADE,
+    FOREIGN KEY (noclass_teacher_username) REFERENCES noclass_teacher(username) ON DELETE CASCADE,
+    FOREIGN KEY (staff_username) REFERENCES staff(username) ON DELETE CASCADE,
+);
+
+CREATE TABLE test_marks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    test_id INT NOT NULL,
+    student_username VARCHAR(50) NOT NULL,
+    marks_obtained FLOAT NOT NULL,
+    rank INT DEFAULT NULL,
+    FOREIGN KEY (test_id) REFERENCES tests(id) ON DELETE CASCADE,
+    FOREIGN KEY (student_username) REFERENCES Students(username) ON DELETE CASCADE
+);
+
+CREATE TABLE Admin (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE feedbacks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    teacher_username VARCHAR(50) NOT NULL,  -- Teacher's username instead of teacher_id
+    grade_id INT NOT NULL,                  -- The grade (class) the feedback is for
+    feedback TEXT NOT NULL,                 -- Feedback content provided by the teacher
+    feedback_date DATE NOT NULL,            -- Date of feedback submission (e.g., current month)
+    status ENUM('Pending', 'Submitted') DEFAULT 'Pending',  -- Tracks feedback submission status
+    FOREIGN KEY (teacher_username) REFERENCES teacher(username) ON DELETE CASCADE,  -- Reference teacher by username
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE  -- Reference grade by ID
+);
+
+
+CREATE TABLE subject_feedbacks (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    teacher_username VARCHAR(50) NOT NULL,   
+    grade_id INT NOT NULL,                   
+    subject_id INT NOT NULL,                 
+    feedback TEXT NOT NULL,                  
+    feedback_date DATE NOT NULL,             
+    FOREIGN KEY (grade_id) REFERENCES grades(id) ON DELETE CASCADE,
+    FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE
+);
+
+CREATE TABLE events (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    start_date DATETIME NOT NULL,
+    end_date DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+);
+
+CREATE TABLE notices (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    end_date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+Patment -------------------------------
+
+
+CREATE TABLE `assign_payment` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+  `fee_per_month` decimal(10,2) NOT NULL,
+  `discount_per_month` decimal(10,2) NOT NULL,
+  `grade` varchar(50) DEFAULT NULL
+);
+
+CREATE TABLE fee_registration (
+    id INT AUTO_INCREMENT PRIMARY KEY,             
+    student_username VARCHAR(100) NOT NULL,        
+    student_name VARCHAR(255) NOT NULL,            
+    parent_phone VARCHAR(15) NOT NULL,            
+    class VARCHAR(50) NOT NULL,                    
+    months_paid TEXT NOT NULL,                     
+    total_amount DECIMAL(10, 2) NOT NULL,          
+    discount_received DECIMAL(10, 2),              
+    final_amount DECIMAL(10, 2) NOT NULL,          
+    payment_date DATE NOT NULL,                    
+    receipt_no VARCHAR(50) UNIQUE NOT NULL        
+);
+
+CREATE TABLE `other_payments` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+  `payment_name` varchar(255) NOT NULL,
+  `payment_amount` decimal(10,2) NOT NULL,
+  `description` text,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `grade` varchar(255) DEFAULT NULL,
+);
+
+
+CREATE TABLE `student_payments` (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    `student_username` VARCHAR(255) NOT NULL, -- Foreign Key to the `Students` table
+    `payment_id` INT NOT NULL, -- Foreign Key to the `other_payments` table
+    `status` VARCHAR(10), -- Payment status (paid or pending, to be updated manually)
+    `payment_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Current timestamp for payment date
+    `grade_name` VARCHAR(255) NOT NULL, -- Grade name associated with the payment
+    FOREIGN KEY (`payment_id`) REFERENCES `other_payments`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`student_username`) REFERENCES `Students`(`username`) ON DELETE CASCADE
+);
+
+Accountant_____________________________________________
+
+CREATE TABLE accountant (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(100) NOT NULL,
+    gender VARCHAR(10),
+    date_of_birth DATE,
+    postal_address TEXT,
+    ethnicity VARCHAR(50),
+    nic_number VARCHAR(12) UNIQUE NOT NULL,
+    marital_status VARCHAR(20),
+    whatsapp_number VARCHAR(15),
+    residence_number VARCHAR(15),
+    first_language VARCHAR(50),
+    profile_image VARCHAR(255),
+    position VARCHAR(50) DEFAULT 'Accountant',
+    active TINYINT(1) DEFAULT 1
+);
+
+CREATE TABLE ol_result_accountant (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    subject_name VARCHAR(100),
+    result VARCHAR(5),
+    index_number VARCHAR(20),
+    year INT,
+    FOREIGN KEY (username) REFERENCES accountant(username)
+);
+
+CREATE TABLE al_result_accountant (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),
+    subject_name VARCHAR(100),
+    result VARCHAR(5),
+    index_number VARCHAR(20),
+    year INT,
+    FOREIGN KEY (username) REFERENCES accountant(username)
+);
+
+CREATE TABLE educational_details_accountant (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50),  
+    other_educational_qualification TEXT,
+    professional_qualification TEXT,
+    extra_curricular_activities TEXT,
+    work_experience TEXT,
+    FOREIGN KEY (username) REFERENCES accountant(username) ON DELETE CASCADE
+);
+
+CREATE TABLE previous_info_accountant (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50), 
+    previous_role VARCHAR(255),
+    previous_company VARCHAR(255),
+    years_experience INT,
+    FOREIGN KEY (username) REFERENCES accountant(username) ON DELETE CASCADE  
+);
+
+CREATE TABLE accountant_block_reasons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    block_reason TEXT NOT NULL,
+    blocked_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (username) REFERENCES accountant(username) ON DELETE CASCADE
+);

@@ -1,0 +1,116 @@
+Received Data: Array
+(
+    [title] => asd
+    [description] => asd
+    [dates] => Array
+        (
+            [0] => 2024-11-01
+            [1] => 2024-11-02
+        )
+
+)
+
+Event ID: 3
+Inserting Date: 2024-11-01
+Inserting Date: 2024-11-02
+Received Data: Array
+(
+    [title] => a
+    [description] => a
+    [dates] => Array
+        (
+            [0] => 2024-11-01
+            [1] => 2024-11-02
+        )
+
+)
+
+Event ID: 4
+Inserting Date: 2024-11-01
+Inserting Date: 2024-11-02
+Received Data: Array
+(
+    [title] => asdas
+    [description] => asdasd
+    [dates] => Array
+        (
+            [0] => 2024-11-01
+            [1] => 2024-11-02
+        )
+
+)
+
+Received Data: Array
+(
+    [title] => asd
+    [description] => asd
+    [dates] => Array
+        (
+            [0] => 2024-11-06
+            [1] => 2024-11-07
+            [2] => 2024-11-08
+        )
+
+)
+
+Received Data: Array
+(
+    [title] => asd
+    [description] => asd
+    [dates] => Array
+        (
+            [0] => 2024-11-06
+            [1] => 2024-11-07
+            [2] => 2024-11-08
+        )
+
+)
+
+Received Data: Array
+(
+    [title] => asd
+    [description] => asd
+    [dates] => Array
+        (
+            [0] => 2024-11-14
+            [1] => 2024-11-20
+        )
+
+)
+
+Received Data: Array
+(
+    [title] => asd
+    [description] => 777777777777777777777777
+    [dates] => Array
+        (
+            [0] => 2024-12-01
+            [1] => 2024-12-03
+        )
+
+)
+
+Received Data: Array
+(
+    [title] => asd
+    [description] => 777777777777777777777777
+    [dates] => Array
+        (
+            [0] => 2024-12-01
+            [1] => 2024-12-03
+        )
+
+)
+
+Received Data: Array
+(
+    [title] => 77777777777777777
+    [description] => asdasd
+    [dates] => Array
+        (
+            [0] => 2024-12-01
+            [1] => 2024-12-03
+        )
+
+)
+

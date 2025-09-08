@@ -1,0 +1,1 @@
+Unknown column 'nic_number' in 'where clause'Unknown column 'nic_number' in 'where clause'
